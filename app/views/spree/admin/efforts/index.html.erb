@@ -1,0 +1,44 @@
+<% content_for :page_title do %>
+  Alocação de tempo
+<% end %>
+
+<% content_for :page_actions do %>
+  <li id="new_product_link">
+		<%= button_link_to "Alocar tempo", new_admin_effort_path %>
+  </li>
+<% end %>
+
+<table>
+  <thead><tr>
+    <th>Funcionário</th>
+    <th>Tarefa</th>
+		<% if false %>
+	    <th>Object</th>
+	    <th>Object type</th>
+		<% end %>
+    <th>Início</th>
+    <th>Fim</th>
+    <th>Total</th>
+    <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+  </tr></thead>
+
+<tbody>
+<% @efforts.each do |effort| %>
+  <tr>
+    <td><%= effort.user.nome %></td>
+    <td><%= effort.task.activity_task %></td>
+		<% if false %>
+	    <td><%= effort.object_id %></td>
+	    <td><%= effort.object_type %></td>
+		<% end %>
+    <td><%= effort.display(:started_at) %></td>
+    <td><%= effort.display(:completed_at) %></td>
+    <td><%= effort.display_amount %></td>
+    <td class='actions align-center' data-hook="admin_orders_index_row_actions">
+			<%= link_to_edit_url edit_admin_effort_path(effort), :no_text => true %>
+			<%= link_to_delete(effort, :no_text => true, :url => admin_effort_path(effort)) if can? :destroy, effort %>
+		</td>
+  </tr>
+<% end %>
+</tbody>
+</table>

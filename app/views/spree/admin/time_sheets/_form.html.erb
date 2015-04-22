@@ -1,0 +1,75 @@
+<%= form_for([:admin, @time_sheet]) do |f| %>
+  <% if @time_sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@time_sheet.errors.count, "error") %> prohibited this time_sheet from being saved:</h2>
+
+      <ul>
+      <% @time_sheet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	
+	<% if spree_current_user.admin? %>
+	
+		<% if @time_sheet.new_record? %>
+		  <div class="field">
+		    <%= f.label :user_id %><br />
+		    <%= f.number_field :user_id %>
+		  </div>
+		  <div class="field">
+		    <%= f.label :date %><br />
+		    <%= f.date_select :date %>
+		  </div>
+		<% end %>
+	  <div class="field">
+	    <%= f.label :entrance_time %><br />
+	    <%= f.time_select :entrance_time %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :lunch_exit_time %><br />
+	    <%= f.time_select :lunch_exit_time %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :lunch_return_time %><br />
+	    <%= f.time_select :lunch_return_time %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :exit_time %><br />
+	    <%= f.time_select :exit_time %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :obs %><br />
+	    <%= f.text_area :obs %>
+	  </div>
+		<%= f.submit "Salvar" %>
+		
+	<% else %>
+	
+		<%= f.hidden_field :date %>
+		<%= f.hidden_field :user_id %>
+		<% if @time_sheet.entrance_time.nil? %>
+	    <%= f.hidden_field :entrance_time, value: Time.now %>
+			<% buttom = "Registrar entrada" %>
+		<% elsif @time_sheet.lunch_exit_time.nil? %>
+	    <%= f.hidden_field :lunch_exit_time, value: Time.now %>
+			<% buttom = "Saída para o almoço" %>
+		<% elsif @time_sheet.lunch_return_time.nil? %>
+	    <%= f.hidden_field :lunch_return_time, value: Time.now %>
+			<% buttom = "Retorno do almoço" %>
+		<% elsif @time_sheet.exit_time.nil? %>
+	    <%= f.hidden_field :exit_time, value: Time.now %>
+			<% buttom = "Registrar saída" %>
+		<% else %>
+			<p>Nenhuma ação adicional é necessária.</p>
+			<% buttom = nil %>
+		<% end %>
+		
+	  <div class="actions">
+	    <%= f.submit buttom if buttom %>
+	  </div>
+		
+	<% end %>
+	
+<% end %>

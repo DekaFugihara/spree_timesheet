@@ -1,0 +1,49 @@
+<% content_for :page_title do %>
+  Registros de ponto
+<% end %>
+
+<% content_for :page_actions do %>
+  <li id="new_product_link">
+		<%= button_link_to "Gerenciar atividades", admin_activities_path if spree_current_user.admin? %>
+		<%= button_link_to "Gerenciar alocação de tempo", admin_efforts_path if spree_current_user.admin? %>
+		<%= button_link_to "Alocar tempo", new_admin_effort_path %>
+  </li>
+<% end %>
+
+<table>
+  <thead><tr>
+		<% if spree_current_user.admin? %>
+    	<th>Funcionário</th>
+		<% end %>
+    <th>Data</th>
+    <th>Entrada</th>
+    <th>Saída para o almoço</th>
+    <th>Retorno do almoço</th>
+    <th>Saída</th>
+		<th>Total</th>
+    <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+  </tr></thead>
+
+<tbody>
+<% @time_sheets.each do |ts| %>
+
+  <tr>
+		<% if spree_current_user.admin? %>
+    	<td><%= ts.user.nome %></td>
+		<% end %>    
+    <td><%= ts.date %></td>
+    <td><%= ts.display(:entrance_time) %></td>
+    <td><%= ts.display(:lunch_exit_time) %></td>
+    <td><%= ts.display(:lunch_return_time) %></td>
+    <td><%= ts.display(:exit_time) %></td>
+		<td><%= ts.display_total %></td>
+    <td class='actions align-center' data-hook="admin_orders_index_row_actions">
+			<% if spree_current_user.admin? %>
+				<%= link_to_edit_url edit_admin_time_sheet_path(ts), :no_text => true %>
+				<%= link_to_delete(ts, :no_text => true, :url => admin_time_sheet_path(ts)) %>
+			<% end %>
+		</td>
+  </tr>
+<% end %>
+</tbody>
+</table>

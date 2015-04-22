@@ -1,0 +1,26 @@
+<% content_for :page_title do %>
+  Listando atividades
+<% end %>
+
+<table>
+  <thead><tr>
+    <th>Name</th>
+    <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+  </tr></thead>
+
+<tbody>
+<% @activities.each do |activity| %>
+  <tr>
+    <td><%= link_to activity.name, admin_activity_path(activity) %></td>
+    <td class='actions align-center' data-hook="admin_orders_index_row_actions">
+			<%= link_to_edit_url edit_admin_activity_path(activity), :no_text => true %>
+			<%= link_to_delete(activity, :no_text => true, :url => admin_activity_path(activity)) if can? :destroy, activity %>
+		</td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'Nova atividade', new_admin_activity_path %>

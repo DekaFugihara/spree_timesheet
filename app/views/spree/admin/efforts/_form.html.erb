@@ -1,0 +1,68 @@
+<%= form_for([:admin, @effort]) do |f| %>
+  <% if @effort.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@effort.errors.count, "error") %> prohibited this effort from being saved:</h2>
+
+      <ul>
+      <% @effort.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<%= f.hidden_field :user_id %>
+		
+  <div class="field">
+    <%= f.label :task_id, "Tarefa" %><br />
+    <%= f.collection_select(:task_id, Spree::Task.all, :id, :activity_task) %>
+  </div>
+	
+	<% if false %>
+	  <div class="field">
+	    <%= f.label :object_id %><br />
+	    <%= f.number_field :object_id %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :object_type %><br />
+	    <%= f.text_field :object_type %>
+	  </div>
+	<% end %>
+
+  <div class="field">
+    <%= f.label "Descrição" %><br />
+    <%= f.text_field :description %>
+  </div>
+	
+	<% if @effort.started_at.nil? %>
+		<% buttom = "Iniciar atividade" %>
+	<% elsif @effort.completed_at.nil? %>
+		<div class="field">Início: <%= @effort.display(:started_at) %></div>
+		<% buttom = "Concluir atividade" %>
+	<% else %>
+		<div class="field">
+			<p><b>Início</b>: <%= @effort.display(:started_at) %></p>
+			<p><b>Fim</b>: <%= @effort.display(:started_at) %></p>
+			<p><b>Total</b>: <%= @effort.display_amount %></p>
+		</div>
+		<% buttom = nil %> 
+	<% end %>
+	
+	<% if spree_current_user.admin? %>
+		<% buttom = "Salvar" %>		
+	  <div class="field">
+	    <%= f.label :started_at, "Início" %><br />
+	    <%= f.datetime_select :started_at %>
+	  </div>
+		<% if @effort.persisted? %>
+	  <div class="field">
+	    <%= f.label :completed_at, "Fim"  %><br />
+	    <%= f.datetime_select :completed_at %>
+	  </div>
+		<% end %>
+	<% end %>
+
+  <div class="actions">
+    <%= f.submit buttom if buttom %>
+  </div>
+<% end %>
