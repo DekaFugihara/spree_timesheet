@@ -33,14 +33,8 @@ module Spree
       # GET /time_sheets/new
       # GET /time_sheets/new.json
       def new
-        
-        if spree_current_user.admin?
-          redirect_to admin_time_sheets_path
-        else
-          time_sheet = TimeSheet.where(date: Date.today, user_id: spree_current_user.id).first_or_create
-          redirect_to edit_admin_time_sheet_path(time_sheet)
-        end
-
+        time_sheet = TimeSheet.where(date: Date.today, user_id: spree_current_user.id).first_or_create
+        redirect_to edit_admin_time_sheet_path(time_sheet)
       end
 
       # GET /time_sheets/1/edit

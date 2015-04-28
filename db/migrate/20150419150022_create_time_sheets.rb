@@ -3,10 +3,10 @@ class CreateTimeSheets < ActiveRecord::Migration
     create_table :time_sheets do |t|
       t.integer :user_id
       t.date :date
-      t.time :entrance_time
-      t.time :exit_time
-      t.time :lunch_exit_time
-      t.time :lunch_return_time
+      t.datetime :entrance_time
+      t.datetime :exit_time
+      t.datetime :lunch_exit_time
+      t.datetime :lunch_return_time
       t.text :obs
 
       t.timestamps

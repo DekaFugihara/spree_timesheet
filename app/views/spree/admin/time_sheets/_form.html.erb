@@ -11,32 +11,22 @@
     </div>
   <% end %>
 	
-	<% if spree_current_user.admin? %>
+	<% if @time_sheet.entrance_time && @time_sheet.lunch_exit_time && @time_sheet.lunch_return_time &&  @time_sheet.exit_time && spree_current_user.admin? %>
 	
-		<% if @time_sheet.new_record? %>
-		  <div class="field">
-		    <%= f.label :user_id %><br />
-		    <%= f.number_field :user_id %>
-		  </div>
-		  <div class="field">
-		    <%= f.label :date %><br />
-		    <%= f.date_select :date %>
-		  </div>
-		<% end %>
 	  <div class="field">
-	    <%= f.label :entrance_time %><br />
+	    <%= f.label :entrance_time, "Entrada" %><br />
 	    <%= f.time_select :entrance_time %>
 	  </div>
 	  <div class="field">
-	    <%= f.label :lunch_exit_time %><br />
+	    <%= f.label :lunch_exit_time, "Saída para o almoço" %><br />
 	    <%= f.time_select :lunch_exit_time %>
 	  </div>
 	  <div class="field">
-	    <%= f.label :lunch_return_time %><br />
+	    <%= f.label :lunch_return_time, "Retorno do almoço" %><br />
 	    <%= f.time_select :lunch_return_time %>
 	  </div>
 	  <div class="field">
-	    <%= f.label :exit_time %><br />
+	    <%= f.label :exit_time, "Saída" %><br />
 	    <%= f.time_select :exit_time %>
 	  </div>
 	  <div class="field">
