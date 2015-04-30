@@ -66,7 +66,7 @@ module Spree
 
         respond_to do |format|
           if @time_sheet.update_attributes(params[:time_sheet])
-            format.html { redirect_to admin_time_sheets_path, notice: 'Registro de ponto atualizado com sucesso!' }
+            format.html { redirect_to edit_admin_time_sheet_path(@time_sheet), notice: 'Registro de ponto atualizado com sucesso!' }
             format.json { head :no_content }
           else
             format.html { render action: "edit" }

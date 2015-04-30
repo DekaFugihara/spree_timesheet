@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <meta http-equiv="Refresh" content="30">
+<% end %>
+
 <%= form_for([:admin, @time_sheet]) do |f| %>
   <% if @time_sheet.errors.any? %>
     <div id="error_explanation">
@@ -37,7 +41,6 @@
 		
 	<% else %>
 	
-		<%= f.hidden_field :date %>
 		<%= f.hidden_field :user_id %>
 		<% if @time_sheet.entrance_time.nil? %>
 	    <%= f.hidden_field :entrance_time, value: Time.now %>
