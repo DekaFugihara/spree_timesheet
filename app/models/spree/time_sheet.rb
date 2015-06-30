@@ -22,8 +22,8 @@ module Spree
         difference = (difference - seconds) / 60
         minutes    = ( difference % 60)
         difference = (difference - minutes) / 60
-        hours      =  (difference % 24)
-        return "#{hours.to_i}h:#{minutes.to_i}m"
+        hours      = (difference % 24)
+        return "#{hours.to_i}h#{minutes.to_i}m"
       end
     end
     

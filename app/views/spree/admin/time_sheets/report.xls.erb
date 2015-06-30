@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+ <Styles>
+  <Style ss:ID="s62">
+   <NumberFormat ss:Format="&quot;R$&quot;#,##0.00"/>
+  </Style>
+ </Styles>
+  <Worksheet ss:Name="Pedidos">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Data</Data></Cell>
+        <% if @user %>
+        <Cell><Data ss:Type="String"><%= @user.nome %></Data></Cell>
+        <% else %>
+				<Cell><Data ss:Type="String">Anaiara</Data></Cell>
+				<Cell><Data ss:Type="String">Bia</Data></Cell>
+				<Cell><Data ss:Type="String">Felipe</Data></Cell>
+        <Cell><Data ss:Type="String">Samantha</Data></Cell>
+        <Cell><Data ss:Type="String">Vinny</Data></Cell>
+        <% end %>
+      </Row>
+    <% @time_sheets.each do |date,ts| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= date.to_date %></Data></Cell>
+        <% if @user %>
+				<Cell><Data ss:Type="String"><%= ts[@user.nome] if ts[@user.nome] %></Data></Cell>
+        <% else %>
+				<Cell><Data ss:Type="String"><%= ts["Anaiara"] if ts["Anaiara"] %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= ts["Bia"] if ts["Bia"] %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= ts["felipe"] if ts["felipe"] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= ts["Samantha"] if ts["Samantha"] %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= ts["Vinny"] if ts["Vinny"] %></Data></Cell>
+        <% end %>
+      </Row>
+    <% end %>
+      <Row>
+      <Cell><Data ss:Type="String">TOTAL</Data></Cell>
+        <% if @user %>
+        <Cell><Data ss:Type="String"><%= @month_total[@user.nome] if @month_total[@user.nome] %></Data></Cell>
+        <% else %>
+        <Cell><Data ss:Type="String"><%= @month_total["Anaiara"] if @month_total["Anaiara"] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @month_total["Bia"] if @month_total["Bia"] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @month_total["felipe"] if @month_total["felipe"] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @month_total["Samantha"] if @month_total["Samantha"] %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @month_total["Vinny"] if @month_total["Vinny"] %></Data></Cell>
+        <% end %>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

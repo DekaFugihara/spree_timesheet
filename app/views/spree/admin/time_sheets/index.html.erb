@@ -4,6 +4,7 @@
 
 <% content_for :page_actions do %>
   <li id="new_product_link">
+    <%= button_link_to "Relatório", report_admin_time_sheets_path if spree_current_user.admin? %>
 		<%= button_link_to "Gerenciar atividades", admin_activities_path if spree_current_user.admin? %>
 		<%= button_link_to "Gerenciar alocação de tempo", admin_efforts_path if spree_current_user.admin? %>
 		<%= button_link_to "Alocar tempo", new_admin_effort_path %>
@@ -47,3 +48,5 @@
 <% end %>
 </tbody>
 </table>
+
+<%= paginate @time_sheets %>

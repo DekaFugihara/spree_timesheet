@@ -1,0 +1,112 @@
+<% content_for :page_title do %>
+  Relatório de ponto
+<% end %>
+
+<% content_for :page_actions do %>
+  <li id="new_product_link">
+		<%= button_link_to "Voltar", admin_activities_path if spree_current_user.admin? %>
+  </li>
+<% end %>
+
+<fieldset>
+  <legend align="center">Período</legend>
+  <%= search_form_for @search, url: "/admin/pontos/report" do |f| %>
+  
+    <div class="field-block alpha four columns">
+      
+      <div class="date-range-filter field">
+        <%= label_tag nil, "Entre as datas:" %>
+        <div class="date-range-fields">
+          <%= f.text_field :date_gt, :class => 'datepicker datepicker-from', :value => params[:q][:date_gt], :placeholder => t(:start) %>
+          <span class="range-divider">
+            <i class="icon-arrow-right"></i>
+          </span>
+          <%= f.text_field :date_lt, :class => 'datepicker datepicker-from', :value => params[:q][:date_lt], :placeholder => t(:start) %>
+        </div>
+      </div>
+    </div>
+
+    <% if spree_current_user.admin? %>
+    <div class="four columns">
+      <div class="field">
+        <%= label_tag nil, t(:email) %>
+        <%= f.email_field :user_email_cont, :size => 25, :value => params[:q][:user_email_cont], :style => 'width: 210px;' %>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="omega four columns">
+      <div class="field checkbox">
+        <label>
+          <%= check_box_tag :format, 'xls' %>
+          Exportar para Excel
+        </label>
+      </div>
+    </div>
+  
+    <div class="clear"></div>
+
+      <div class="actions filter-actions">
+        <div data-hook="admin_orders_index_search_buttons">
+          <%= button t(:filter_results), 'icon-search' %>
+        </div>
+      </div>
+  
+  <% end %>
+</fieldset>
+
+<table>
+<colgroup>
+   <col style="width: 20%;">
+   <col style="width: 16%;">
+   <% unless @user %>
+   <col style="width: 16%;">
+   <col style="width: 16%;">
+   <col style="width: 16%;">
+   <col style="width: 16%;">
+   <% end %>
+</colgroup>
+<thead><tr>
+  <th>Data</th>
+  <% if @user %>
+    <th><%= @user.nome %></th>
+  <% else %>
+    <th>Anaiara</th>
+    <th>Bia</th>
+    <th>Felipe</th>
+    <th>Samantha</th>
+    <th>Vinny</th>
+  <% end %>
+</tr></thead>
+<tbody>
+<% @time_sheets.each do |date,ts| %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <th class="align-center"><%= date.strftime("%d/%m/%Y") %></th>
+    <% if @user %>
+      <td class="align-center"><%= ts[@user.nome] %></td>
+    <% else %>
+      <td class="align-center"><%= ts["Anaiara"] %></td>
+      <td class="align-center"><%= ts["Bia"] %></td>
+      <td class="align-center"><%= ts["felipe"] %></td>
+      <td class="align-center"><%= ts["Samantha"] %></td>
+      <td class="align-center"><%= ts["Vinny"] %></td>
+    <% end %>
+  </tr>
+  
+<% end %>
+</tbody>
+<tfooter>
+  <tr>
+    <th>TOTAL</th>
+    <% if @user %>
+      <td class="align-center"><%= @month_total[@user.nome] %></td>
+    <% else %>
+      <td class="align-center"><%= @month_total["Anaiara"] %></td>
+      <td class="align-center"><%= @month_total["Bia"] %></td>
+      <td class="align-center"><%= @month_total["felipe"] %></td>
+      <td class="align-center"><%= @month_total["Samantha"] %></td>
+      <td class="align-center"><%= @month_total["Vinny"] %></td>
+    <% end %>
+  </tr>
+</tfooter>
+</table>
