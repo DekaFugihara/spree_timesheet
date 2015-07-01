@@ -4,7 +4,7 @@
 
 <% content_for :page_actions do %>
   <li id="new_product_link">
-		<%= button_link_to "Voltar", admin_activities_path if spree_current_user.admin? %>
+		<%= button_link_to "Voltar", new_admin_time_sheet_path if spree_current_user.admin? %>
   </li>
 <% end %>
 
