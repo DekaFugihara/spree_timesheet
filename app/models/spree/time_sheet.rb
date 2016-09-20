@@ -1,8 +1,6 @@
 module Spree
   class TimeSheet < ActiveRecord::Base
     self.table_name = "time_sheets"
-    default_scope order('date DESC')
-    attr_accessible :date, :entrance_time, :exit_time, :lunch_exit_time, :lunch_return_time, :obs, :user_id
     belongs_to :user
     
     def display(attribute)

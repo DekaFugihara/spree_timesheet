@@ -1,8 +1,6 @@
 module Spree
   class Effort < ActiveRecord::Base
     self.table_name = "efforts"
-    default_scope order('started_at DESC')
-    attr_accessible :amount, :completed_at, :description, :object_id, :object_type, :started_at, :task_id, :user_id
     belongs_to :user
     belongs_to :task
     before_save :calculate_amount
