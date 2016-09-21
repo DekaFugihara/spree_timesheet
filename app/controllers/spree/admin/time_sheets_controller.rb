@@ -1,3 +1,4 @@
+# coding: utf-8
 module Spree
   module Admin
     class TimeSheetsController < ResourceController
@@ -47,7 +48,7 @@ module Spree
       # POST /time_sheets
       # POST /time_sheets.json
       def create
-        @time_sheet = TimeSheet.new(params[:time_sheet])
+        @time_sheet = TimeSheet.new(timesheet_params)
 
         respond_to do |format|
           if @time_sheet.save
@@ -66,7 +67,7 @@ module Spree
         @time_sheet = TimeSheet.find(params[:id])
 
         respond_to do |format|
-          if @time_sheet.update_attributes(params[:time_sheet])
+          if @time_sheet.update_attributes(timesheet_params)
             format.html { redirect_to edit_admin_time_sheet_path(@time_sheet), notice: 'Registro de ponto atualizado com sucesso!' }
             format.json { head :no_content }
           else
@@ -151,6 +152,10 @@ module Spree
       
         def model_class
           Spree::TimeSheet
+        end
+
+        def timesheet_params
+            params.require(:time_sheet).permit(:entrance_time,:user_id,:lunch_exit_time,:lunch_return_time,:exit_time,:obs)
         end
       
     end

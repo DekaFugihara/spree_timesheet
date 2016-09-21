@@ -1,2 +1,2 @@
-//= require admin/spree_core
+//= require spree/backend/admin/common
 //= require admin/activities
