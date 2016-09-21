@@ -33,7 +33,7 @@ module Spree
       # GET /efforts/new
       # GET /efforts/new.json
       def new
-        @effort = Effort.new(user_id: spree_current_user.id)
+        @effort = Spree::Effort.new(user_id: spree_current_user.id)
 
         respond_to do |format|
           format.html # new.html.erb
@@ -49,7 +49,7 @@ module Spree
       # POST /efforts
       # POST /efforts.json
       def create
-        @effort = Effort.new(params[:effort])
+        @effort = Effort.new(effort_params)
         @effort.started_at = Time.now if params[:commit] == "Iniciar atividade"
 
         respond_to do |format|
@@ -70,7 +70,7 @@ module Spree
         @effort.completed_at = Time.now if params[:commit] == "Concluir atividade"
 
         respond_to do |format|
-          if @effort.update_attributes(params[:effort])
+          if @effort.update_attributes(effort_params)
             format.html { redirect_to admin_efforts_path, notice: 'Alocação atualizada com sucesso.' }
             format.json { head :no_content }
           else
@@ -96,6 +96,10 @@ module Spree
       
         def model_class
           Spree::Effort
+        end
+
+        def effort_params
+          params.require(:effort).permit(:user_id,:task_id, :description, :started_at,:completed_at)
         end
       
     end
