@@ -25,7 +25,7 @@
 <tbody>
 <% @efforts.each do |effort| %>
   <tr>
-    <td><%= effort.user.firstname %></td>
+    <td><%= effort.user.firstname if effort.user %></td>
     <td><%= effort.task.activity_task %></td>
 		<% if false %>
 	    <td><%= effort.object_id %></td>
@@ -35,8 +35,10 @@
     <td><%= effort.display(:completed_at) %></td>
     <td><%= effort.display_amount %></td>
     <td class='actions align-center' data-hook="admin_orders_index_row_actions">
+    <% if spree_current_user.admin? %>
 			<%= link_to_edit_url edit_admin_effort_path(effort), :no_text => true %>
 			<%= link_to_delete(effort, :no_text => true, :url => admin_effort_path(effort)) if can? :destroy, effort %>
+    <%end%>
 		</td>
   </tr>
 <% end %>
