@@ -1,3 +1,4 @@
+<% if spree_current_user.admin?%>
 <%= form_for([:admin, @effort]) do |f| %>
   <% if @effort.errors.any? %>
     <div id="error_explanation">
@@ -66,3 +67,4 @@
     <%= f.submit buttom if buttom %>
   </div>
 <% end %>
+<%end%>
