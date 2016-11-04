@@ -4,6 +4,7 @@ module Spree
     belongs_to :user
     belongs_to :task
     before_save :calculate_amount
+    has_many :stock_events, :class_name => 'Spree::StockEvent'
 
     def display(attribute)
       self.send(attribute).strftime("%d/%m-%H:%M") unless self.send(attribute).nil?
