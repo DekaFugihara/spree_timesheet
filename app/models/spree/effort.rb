@@ -4,6 +4,7 @@ module Spree
     belongs_to :user
     belongs_to :task
     before_save :calculate_amount
+    belongs_to :object, polymorphic: true
 
     def display(attribute)
       self.send(attribute).strftime("%d/%m-%H:%M") unless self.send(attribute).nil?
@@ -18,6 +19,22 @@ module Spree
         difference = (difference - minutes) / 60
         hours      =  (difference % 24)
         return "#{hours.to_i}h:#{minutes.to_i}m"
+      end
+    end
+
+    def object_name
+      case object_type
+      when "Spree::Plp" then "PLP"
+      when "Spree::StockBox" then "Caixa"
+      else "Sacola"
+      end
+    end
+
+    def object_title
+      if object_type == "Spree::Plp"
+        "##{object_id}"
+      else
+        "##{object.number}"
       end
     end
     
