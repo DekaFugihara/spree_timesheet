@@ -3,8 +3,11 @@ module Spree
     self.table_name = "efforts"
     belongs_to :user
     belongs_to :task
-    before_save :calculate_amount
     belongs_to :object, polymorphic: true
+
+    has_many :stock_events, :class_name => 'Spree::StockEvent'
+
+    before_save :calculate_amount
 
     def display(attribute)
       self.send(attribute).strftime("%d/%m-%H:%M") unless self.send(attribute).nil?
