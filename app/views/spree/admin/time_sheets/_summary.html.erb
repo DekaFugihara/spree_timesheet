@@ -1,43 +1,28 @@
-	<div class="field">
-	<% if @time_sheet.entrance_time %>
-		<p>
-		  <b>Entrada:</b>
-		  <%= @time_sheet.display(:entrance_time) %>
-		</p>
+<table class="table table-bordered">
+	<tr>
+		<th width="35%">Entrada:</th>
+		<td><%= @time_sheet.display(:entrance_time) if @time_sheet.entrance_time %></td>
+	</tr>
+	<tr>
+		<th>Saída para o almoço:</th>
+		<td><%= @time_sheet.display(:lunch_exit_time) if @time_sheet.lunch_exit_time %></td>
+	</tr>
+	<tr>
+		<th>Retorno do almoço:</th>
+		<td><%= @time_sheet.display(:lunch_return_time) if @time_sheet.lunch_return_time %></td>
+	</tr>
+	<tr>
+		<th>Saída:</th>
+		<td><%= @time_sheet.display(:exit_time) if @time_sheet.exit_time %></td>
+	</tr>
+	<tr class="active">
+		<th>Total de horas trabalhadas:</th>
+		<td><%= @time_sheet.display_total %></td>
+	</tr>
+	<% if @time_sheet.obs %>
+		<tr class="info">
+			<th>OBS:</th>
+			<td><%= @time_sheet.obs %></td>
+		</tr>
 	<% end %>
-
-	<% if @time_sheet.lunch_exit_time %>
-		<p>
-		  <b>Saída para o almoço:</b>
-		  <%= @time_sheet.display(:lunch_exit_time) %>
-		</p>
-	<% end %>
-
-	<% if @time_sheet.lunch_return_time %>
-		<p>
-		  <b>Retorno do almoço:</b>
-		  <%= @time_sheet.display(:lunch_return_time) %>
-		</p>
-	<% end %>
-
-	<% if @time_sheet.exit_time %>
-		<p>
-		  <b>Saída:</b>
-		  <%= @time_sheet.display(:exit_time) %>
-		</p>
-	<% end %>
-
-	<% if @time_sheet.entrance_time && @time_sheet.exit_time %>
-		<p>
-		  <b>Total de horas trabalhadas:</b>
-		  <%= @time_sheet.display_total %>
-		</p>
-	<% end %>
-</div>
-
-<% if @time_sheet.obs %>
-<p>
-  <b>Obs:</b>
-  <%= @time_sheet.obs %>
-</p>
-<% end %>
+</table>
