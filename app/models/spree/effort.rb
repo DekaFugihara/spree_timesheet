@@ -1,5 +1,5 @@
 module Spree
-  class Effort < ActiveRecord::Base
+  class Effort < Spree::Base
     self.table_name = "efforts"
     belongs_to :user
     belongs_to :task
@@ -8,6 +8,9 @@ module Spree
     has_many :stock_events, :class_name => 'Spree::StockEvent'
 
     before_save :calculate_amount
+
+    self.whitelisted_ransackable_associations = %w[task]
+    self.whitelisted_ransackable_attributes = %w[user_id]
 
     def display(attribute)
       self.send(attribute).strftime("%d/%m-%H:%M") unless self.send(attribute).nil?
