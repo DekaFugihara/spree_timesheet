@@ -10,7 +10,7 @@ module Spree
         if spree_current_user.admin?
           @time_sheets = TimeSheet.all.order("date DESC")
         else
-          @time_sheets = spree_current_user.time_sheets.where("date >= ?", Date.today.beginning_of_month).where("date =< ?", Date.today.end_of_month).order("date DESC")
+          @time_sheets = spree_current_user.time_sheets.where("date >= ?", Date.today.beginning_of_month).where("date <= ?", Date.today.end_of_month).order("date DESC")
         end
         @time_sheets = Kaminari.paginate_array(@time_sheets).page(params[:page]).per(30)
         
